@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Board, User
+from .models import *
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .forms import UserCreationForm, UserChangeForm  
 from django.utils.safestring import mark_safe
@@ -46,3 +46,20 @@ class CustomUserAdmin(BaseUserAdmin):
 
 
 admin.site.register(User, CustomUserAdmin)
+
+
+@admin.register(Product)
+class ProductAdmin(admin.ModelAdmin):
+    list_display = ('name', 'price', 'barcode', 'discount', 'image_preview', 'is_featured')
+    search_fields = ('name', 'barcode')
+    readonly_fields = ('image_preview',)
+    list_filter = ('is_featured',)
+    fields = ('name', 'price', 'discount', 'barcode', 'label', 'image', 'image_preview', 'is_featured')
+
+
+    def image_preview(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
+        return "Нет изображения"
+
+    image_preview.short_description = 'Изображение'

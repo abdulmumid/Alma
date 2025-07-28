@@ -7,6 +7,7 @@ from .models import *
 from rest_framework_simplejwt.tokens import RefreshToken
 import random
 from .signals import send_telegram_code
+from rest_framework import filters
 
 class RegisterView(APIView):
     def post(self, request):
@@ -83,3 +84,9 @@ class BoardViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = BoardSerializer
     permission_classes = [permissions.AllowAny]
 
+
+class ProductViewSet(viewsets.ModelViewSet):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ['barcode']

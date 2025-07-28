@@ -67,3 +67,22 @@ class Board(models.Model):
     class Meta:
         verbose_name = 'Доска'
         verbose_name_plural = 'Доски'
+
+
+class Product(models.Model):
+    name = models.CharField(('Название'),max_length=255)
+    price = models.DecimalField(('Цена'),max_digits=8, decimal_places=2)
+    discount = models.DecimalField(('Скидка'),max_digits=5, decimal_places=2, null=True, blank=True)
+    image = models.ImageField(('Изоброжение'),upload_to='products/')
+    barcode = models.CharField(('Штрихкод'),max_length=100, unique=True)  # Штрих-код
+    label = models.CharField(('Начисленные бонусы'),max_length=50, blank=True)      # например: "100 бонусов"
+    is_featured = models.BooleanField(('Избронный'),default=False)
+
+    def __str__(self):
+        return f"{self.name} ({self.barcode})"
+    
+    class Meta:
+        verbose_name = "Продукт"
+        verbose_name_plural = "Продукты"
+        
+    
