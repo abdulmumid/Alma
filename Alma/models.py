@@ -2,6 +2,8 @@ from django.db import models
 from ckeditor_uploader.fields import RichTextUploadingField
 from django.utils.text import slugify
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.conf import settings
+
 
 # Менеджер пользователя
 class UserManager(BaseUserManager):
@@ -84,5 +86,53 @@ class Product(models.Model):
     class Meta:
         verbose_name = "Продукт"
         verbose_name_plural = "Продукты"
+
+
+class Stock(models.Model):
+    title = models.CharField(('Зоголовок'), max_length=255)
+    image =models.ImageField(('Изоброжение'), upload_to='Stock/')
+    created_at = models.DateTimeField(('Время создания'), auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.title}"
         
-    
+    class Meta:
+        verbose_name = 'Акция'
+        verbose_name_plural = 'Акции'
+
+
+class Story(models.Model):
+    title = models.CharField(max_length=100)
+    icon = models.ImageField(upload_to='stories/')
+    is_active = models.BooleanField(default=True)
+
+    def __str__(self):
+        return f"{self.title}"
+        
+    class Meta:
+        verbose_name = 'Сторис'
+        verbose_name_plural = 'Сторисы'
+
+
+class CartItem(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity = models.PositiveIntegerField(default=1)
+
+    def __str__(self):
+        return f"{self.product}"
+        
+    class Meta:
+        verbose_name = 'Корзина'
+        verbose_name_plural = 'Корзины'
+ 
+
+class UserBonus(models.Model): 
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    bonuses = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.user}"
+        
+    class Meta:
+        verbose_name = 'Бонус пользователя'
+        verbose_name_plural = 'Бонусы пользователей'

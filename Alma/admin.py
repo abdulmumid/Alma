@@ -63,3 +63,32 @@ class ProductAdmin(admin.ModelAdmin):
         return "Нет изображения"
 
     image_preview.short_description = 'Изображение'
+
+@admin.register(Stock)
+class StockAdmin(admin.ModelAdmin):
+    list_display = ('title', 'image_preview', 'created_at')
+
+    def image_preview(self, obj):
+        if obj.image:
+            return mark_safe(f'<img src="{obj.image.url}" style="max-height: 100px; max-width: 100px;" />')
+        return "Нет изображения"
+
+    image_preview.short_description = 'Изображение'
+
+@admin.register(Story)
+class StoryAdmin(admin.ModelAdmin):
+    list_display = ['id', 'title', 'is_active']
+    search_fields = ['title']
+    list_filter = ['is_active']
+
+
+@admin.register(CartItem)
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ['id', 'product', 'quantity']
+    list_filter = ['product']
+
+
+@admin.register(UserBonus)
+class UserBonusAdmin(admin.ModelAdmin):
+    list_display = ['id', 'user', 'bonuses']
+    search_fields = ['user__username']

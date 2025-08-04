@@ -1,12 +1,15 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
-from .views import RegisterView, VerifyCodeView, LoginView, BoardViewSet, RequestPasswordResetView, ResetPasswordView, ProductViewSet
+from .views import *
 from django.conf import settings
 from django.conf.urls.static import static
 
 router = DefaultRouter()
 router.register(r'boards', BoardViewSet, basename='boards')
 router.register(r'products', ProductViewSet)
+router.register('stories', StoryViewSet)
+router.register('cart', CartItemViewSet)
+router.register('bonuses', UserBonusViewSet)
 
 urlpatterns = [
     path('register/', RegisterView.as_view(), name='register'),

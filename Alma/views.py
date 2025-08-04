@@ -90,3 +90,24 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     filter_backends = [filters.SearchFilter]
     search_fields = ['barcode']
+
+
+class StockViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Stock.objects.all()
+    serializer_class = StockSerializer
+    permission_classes = [permissions.AllowAny]
+
+
+class StoryViewSet(viewsets.ModelViewSet):
+    queryset = Story.objects.all()
+    serializer_class = StorySerializer
+
+
+class CartItemViewSet(viewsets.ModelViewSet):
+    queryset = CartItem.objects.all()
+    serializer_class = CartItemSerializer
+ 
+ 
+class UserBonusViewSet(viewsets.ModelViewSet):
+    queryset = UserBonus.objects.all()
+    serializer_class = UserBonusSerializer
