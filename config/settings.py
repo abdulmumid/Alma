@@ -23,6 +23,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.gis',
 
     'rest_framework',
     'rest_framework.authtoken',
@@ -35,6 +36,7 @@ INSTALLED_APPS = [
 
     'Alma',
 ]
+
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',  # Должно быть первым
@@ -69,14 +71,17 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': os.getenv('DB_HOST'),
-        'PORT': os.getenv('DB_PORT'),
+        'ENGINE': 'django.contrib.gis.db.backends.postgis',
+        'NAME': 'alma',
+        'USER': 'almauser',
+        'PASSWORD': 'alma4231',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
